@@ -22,8 +22,8 @@ this implementation is mainly based on [Deep Camouflage Images](http://zhangqing
 In the case of conda.
 
 ```
-conda create -n camouflage python=3.8
-conda activate camouflage
+conda create -n deep_camouflage python=3.8
+conda activate deep_camouflage
 ```
 and then, install pytorch / torchvision, reference to [official website](https://pytorch.org/get-started/locally/)
 

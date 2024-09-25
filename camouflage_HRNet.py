@@ -317,7 +317,10 @@ def main(args):
             canvas=canvas.astype(np.uint8)
             canvas=cv2.cvtColor(canvas,cv2.COLOR_RGB2BGR)
             h_show,w_show,c=canvas.shape
-            cv2.imshow("now camouflage...",cv2.resize(canvas,(w_show//args.show_comp,h_show//args.show_comp)))
+            # 禁用opencv的GUI改为保存到磁盘
+            # cv2.imshow("now camouflage...",cv2.resize(canvas,(w_show//args.show_comp,h_show//args.show_comp)))
+            output_path = os.path.join(camouflage_dir, f"process_epoch_{epoch}.png")
+            cv2.imwrite(output_path, cv2.resize(canvas, (w_show//args.show_comp, h_show//args.show_comp)))
 
             
         epoch+=1

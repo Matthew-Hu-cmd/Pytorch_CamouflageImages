@@ -1,4 +1,9 @@
 tqdm
 albumentations
+albumentations==0.4.6
 opencv-contrib-python
 scikit-learn==0.23.2
+scikit-image==0.17.2
+opencv-contrib-python==4.5.5.64
+numpy==1.19.3
+torch==1.7.1+cu110 torchvision==0.8.2+cu110 -f https://download.pytorch.org/whl/torch_stable.html
