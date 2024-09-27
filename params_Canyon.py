@@ -19,7 +19,7 @@ class CFG:
     ########################
     #### train setting #####
     ########################
-    epoch=1000
+    epoch=100
     lr=5e-3
     
     ########################
@@ -48,7 +48,7 @@ class CFG:
     ########################
     #### log setting #######
     ########################
-    show_every = 100
+    show_every = 10
     save_process = True
     show_comp=4
     
