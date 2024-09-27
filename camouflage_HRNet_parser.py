@@ -360,7 +360,7 @@ if __name__ == "__main__":
     parser.add_argument('--hidden_selected', type=tuple, default=None, help='Manually specify hidden region coordinates.')
 
     # Training settings
-    parser.add_argument('--epoch', type=int, default=100, help='Number of training epochs.')
+    parser.add_argument('--epoch', type=int, default=20, help='Number of training epochs.')
     parser.add_argument('--lr', type=float, default=5e-3, help='Learning rate.')
 
     # Loss settings
