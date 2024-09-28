@@ -81,14 +81,16 @@ def process_single_image(fore_path, mask_path, bg_path, args):
     mask_crop=mask[y1_m:y2_m,x1_m:x2_m]
     mask_crop=np.where(mask_crop>0,255,0).astype(np.uint8)
     kernel = np.ones((15,15),np.uint8)
-    mask_dilated=cv2.dilate(mask_crop,kernel,iterations = 1)
+    # mask_dilated=cv2.dilate(mask_crop,kernel,iterations = 1)
+    # 直接不膨胀，省的mask尺寸一致的时候报错
+    mask_dilated= mask_crop
     
 
     origin=cv2.cvtColor(cv2.imread(bg_path),cv2.COLOR_BGR2RGB)
     h_origin,w_origin,_ = origin.shape
     h,w=mask_dilated.shape
-    assert h < h_origin, "mask height must be smaller than bg height, and lower mask_scale parameter!!"
-    assert w < w_origin, "mask width must be smaller than bg width, and lower mask_scale parameter!!"
+    assert h <= h_origin, "mask height must be smaller than bg height, and lower mask_scale parameter!!"
+    assert w <= w_origin, "mask width must be smaller than bg width, and lower mask_scale parameter!!"
     
     print("mask size,height:{},width:{}".format(h,w))
     if args.hidden_selected is None:
@@ -328,16 +330,16 @@ if __name__ == "__main__":
     parser.add_argument('--foreground_dir', type=str, default='/home/ac/data/2023/huyang/COD_Dataset/NC4K/Imgs', help='Directory containing foreground images.')
     parser.add_argument('--background_dir', type=str, default='/home/ac/data/2023/huyang/COD_Dataset/coco_NC4K', help='Directory containing background images.')
     parser.add_argument('--mask_dir', type=str, default='/home/ac/data/2023/huyang/COD_Dataset/NC4K/GT', help='Directory containing mask images.')
-    parser.add_argument('--output_dir', type=str, default='samples/outputs/NC4K', help='Directory to save output images.')
+    parser.add_argument('--output_dir', type=str, default='samples/outputs/NC4K-epoch200', help='Directory to save output images.')
 
     # General settings
     parser.add_argument('--seed', type=int, default=0, help='Random seed for reproducibility.')
-    parser.add_argument('--mask_scale', type=float, default=0.9, help='Scale factor for the mask.')
+    parser.add_argument('--mask_scale', type=float, default=1.0, help='Scale factor for the mask.')
     parser.add_argument('--crop', type=bool, default=False, help='Whether to crop the mask or not.')
-    parser.add_argument('--hidden_selected', type=tuple, default=None, help='Manually specify hidden region coordinates.')
+    parser.add_argument('--hidden_selected', type=tuple, default=(0, 0), help='Manually specify hidden region coordinates.') # 不使用recommend函数来推荐隐藏区域，会降低性能
 
     # Training settings
-    parser.add_argument('--epoch', type=int, default=100, help='Number of training epochs.')
+    parser.add_argument('--epoch', type=int, default=200, help='Number of training epochs.')
     parser.add_argument('--lr', type=float, default=5e-3, help='Learning rate.')
 
     # Loss settings
